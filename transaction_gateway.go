@@ -9,6 +9,8 @@ type TransactionGateway struct {
 	*Braintree
 }
 
+const pageSize = 50
+
 // Create initiates a transaction.
 func (g *TransactionGateway) Create(tx *Transaction) (*Transaction, error) {
 	resp, err := g.execute("POST", "transactions", tx)
@@ -111,9 +113,15 @@ func (g *TransactionGateway) Find(id string) (*Transaction, error) {
 	return nil, &invalidResponseError{resp}
 }
 
-// Search finds all transactions matching the search query.
+func min(a, b int) int {
+	if a <= b {
+		return a
+	}
+	return b
+}
+
 func (g *TransactionGateway) Search(query *SearchQuery) (*TransactionSearchResult, error) {
-	resp, err := g.execute("POST", "transactions/advanced_search", query)
+	resp, err := g.execute("POST", "transactions/advanced_search_ids", query)
 	if err != nil {
 		return nil, err
 	}
@@ -122,6 +130,37 @@ func (g *TransactionGateway) Search(query *SearchQuery) (*TransactionSearchResul
 	if err != nil {
 		return nil, err
 	}
+
+	// Paginate results
+	res := &TransactionSearchItemResult{}
+	var err_fetch error
+	lenItems := len(v.Ids.Item)
+	ids := query.AddIdsField("ids")
+	for i := 0; i < lenItems; i += pageSize {
+		ids.Items = v.Ids.Item[i:min(i+pageSize, lenItems)]
+		res, err_fetch = g.fetchTransactions(query)
+		if err_fetch != nil {
+			return nil, err_fetch
+		}
+		for _, trans := range res.Transactions {
+			v.Transactions = append(v.Transactions, trans)
+		}
+	}
+
+	return &v, err
+}
+
+func (g *TransactionGateway) fetchTransactions(query *SearchQuery) (*TransactionSearchItemResult, error) {
+	resp, err := g.execute("POST", "transactions/advanced_search", query)
+	if err != nil {
+		return nil, err
+	}
+	var v TransactionSearchItemResult
+	err = xml.Unmarshal(resp.Body, &v)
+	if err != nil {
+		return nil, err
+	}
+
 	return &v, err
 }
 

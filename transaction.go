@@ -1,8 +1,9 @@
 package braintree
 
 import (
-	"github.com/lionelbarrow/braintree-go/nullable"
 	"time"
+
+	"github.com/lionelbarrow/braintree-go/nullable"
 )
 
 type Transaction struct {
@@ -102,10 +103,20 @@ type TransactionOptions struct {
 	StoreShippingAddressInVault      bool `xml:"store-shipping-address-in-vault,omitempty"`
 }
 
-type TransactionSearchResult struct {
+type TransactionSearchItemResult struct {
 	XMLName           string              `xml:"credit-card-transactions"`
 	CurrentPageNumber *nullable.NullInt64 `xml:"current-page-number"`
 	PageSize          *nullable.NullInt64 `xml:"page-size"`
 	TotalItems        *nullable.NullInt64 `xml:"total-items"`
 	Transactions      []*Transaction      `xml:"transaction"`
+}
+
+type TransactionSearchResult struct {
+	XMLName      string              `xml:"search-results"`
+	PageSize     *nullable.NullInt64 `xml:"page-size"`
+	Transactions []*Transaction      `xml:"transaction"`
+
+	Ids struct {
+		Item []string `xml:"item"`
+	} `xml:"ids"`
 }

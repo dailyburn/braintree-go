@@ -39,6 +39,21 @@ type MultiField struct {
 	Items   []string `xml:"item"`
 }
 
+type IdsField struct {
+	XMLName xml.Name
+	Type    string   `xml:"type,attr"` // type=array
+	Items   []string `xml:"item"`
+}
+
+func (s *SearchQuery) AddIdsField(field string) *IdsField {
+	f := &IdsField{
+		XMLName: xml.Name{Local: field},
+		Type:    "array",
+	}
+	s.Fields = append(s.Fields, f)
+	return f
+}
+
 func (s *SearchQuery) AddTextField(field string) *TextField {
 	f := &TextField{XMLName: xml.Name{Local: field}}
 	s.Fields = append(s.Fields, f)
