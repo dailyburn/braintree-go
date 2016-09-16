@@ -131,6 +131,10 @@ func (g *TransactionGateway) Search(query *SearchQuery) (*TransactionSearchResul
 		return nil, err
 	}
 
+	if g.Logger != nil {
+		g.Logger.Printf("Total Items=%d\n", len(v.Ids.Item))
+	}
+
 	// Paginate results
 	res := &TransactionSearchItemResult{}
 	var err_fetch error
