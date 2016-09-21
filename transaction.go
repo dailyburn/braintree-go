@@ -35,6 +35,7 @@ type Transaction struct {
 	ProcessorResponseText      string               `xml:"processor-response-text,omitempty"`
 	ProcessorAuthorizationCode string               `xml:"processor-authorization-code,omitempty"`
 	SettlementBatchId          string               `xml:"settlement-batch-id,omitempty"`
+	Subscription               *Subscription        `xml:"subscription,omitempty"`
 }
 
 // TODO: not all transaction fields are implemented yet, here are the missing fields (add on demand)
@@ -77,10 +78,6 @@ type Transaction struct {
 //   </status-history>
 //   <plan-id>bronze</plan-id>
 //   <subscription-id>jqsydb</subscription-id>
-//   <subscription>
-//     <billing-period-end-date type="date">2013-11-06</billing-period-end-date>
-//     <billing-period-start-date type="date">2013-10-07</billing-period-start-date>
-//   </subscription>
 //   <add-ons type="array"/>
 //   <discounts type="array"/>
 //   <descriptor>
