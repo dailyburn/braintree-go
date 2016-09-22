@@ -36,6 +36,8 @@ type Transaction struct {
 	ProcessorAuthorizationCode string               `xml:"processor-authorization-code,omitempty"`
 	SettlementBatchId          string               `xml:"settlement-batch-id,omitempty"`
 	Subscription               *Subscription        `xml:"subscription,omitempty"`
+	AddOns                     *AddOnResults        `xml:"add-ons,omitempty"`
+	Discounts                  *DiscountResults     `xml:"discounts,omitempty"`
 }
 
 // TODO: not all transaction fields are implemented yet, here are the missing fields (add on demand)
@@ -78,8 +80,6 @@ type Transaction struct {
 //   </status-history>
 //   <plan-id>bronze</plan-id>
 //   <subscription-id>jqsydb</subscription-id>
-//   <add-ons type="array"/>
-//   <discounts type="array"/>
 //   <descriptor>
 //     <name nil="true"></name>
 //     <phone nil="true"></phone>
