@@ -1,6 +1,6 @@
 package braintree
 
-import "github.com/rkulla/braintree-go/nullable"
+import "github.com/dailyburn/braintree-go/nullable"
 
 type AddOnList struct {
 	XMLName string  `xml:"add-ons"`
