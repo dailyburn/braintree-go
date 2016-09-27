@@ -1,6 +1,6 @@
 package braintree
 
-import "github.com/rkulla/braintree-go/nullable"
+import "github.com/dailyburn/braintree-go/nullable"
 
 type DiscountList struct {
 	XMLName   string     `xml:"discounts"`
