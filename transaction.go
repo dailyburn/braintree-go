@@ -38,6 +38,7 @@ type Transaction struct {
 	Subscription               *Subscription        `xml:"subscription,omitempty"`
 	AddOns                     *AddOnResults        `xml:"add-ons,omitempty"`
 	Discounts                  *DiscountResults     `xml:"discounts,omitempty"`
+	TaxAmount                  string               `xml:"tax-amount,omitempty"`
 }
 
 // TODO: not all transaction fields are implemented yet, here are the missing fields (add on demand)
@@ -53,7 +54,6 @@ type Transaction struct {
 //   <gateway-rejection-reason nil="true"></gateway-rejection-reason>
 //   <voice-referral-number nil="true"></voice-referral-number>
 //   <purchase-order-number nil="true"></purchase-order-number>
-//   <tax-amount nil="true"></tax-amount>
 //   <tax-exempt type="boolean">false</tax-exempt>
 //   <status-history type="array">
 //     <status-event>
