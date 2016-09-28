@@ -54,6 +54,16 @@ type StatusHistoryResults struct {
 	StatusEvent []StatusEventItem `xml:"status-event,omitempty"`
 }
 
+func (h *StatusHistoryResults) TimeAt(status string) *time.Time {
+	for _, e := range h.StatusEvent {
+		if e.Status == status {
+			return e.Timestamp
+		}
+	}
+
+	return nil
+}
+
 // TODO: not all transaction fields are implemented yet, here are the missing fields (add on demand)
 //
 // <transaction>
