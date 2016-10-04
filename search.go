@@ -43,7 +43,7 @@ type RangeDateField struct {
 
 func (d RangeDateField) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	var err error
-	format := "01/02/2006 15:04:05"
+	format := "01/02/2006 15:04:05 MST"
 	err = e.EncodeToken(xml.StartElement{Name: d.XMLName})
 	if err != nil {
 		return nil
